@@ -1,0 +1,52 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class enemyScript : MonoBehaviour
+{
+    [SerializeField] GameObject player;
+
+    private NavMeshAgent agent;
+    
+    private enum State
+    { 
+        idle,
+        chase,
+        die,
+    
+    }
+
+    private State behavior;
+
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        EnemyBrain();
+    }
+
+    public void EnemyBrain()
+    {
+        switch (behavior) 
+        {
+            case State.idle:
+                //idle behavior
+                break;
+
+            case State.chase:
+                //chase behavior
+                break;
+
+            case State.die:
+                //chase die
+                break;
+        
+        
+        }
+}
