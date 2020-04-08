@@ -1,0 +1,61 @@
+using System.Collections;
+using UnityEngine;
+
+public class lerpTestScript : MonoBehaviour
+{
+    [SerializeField] private GameObject lerpToPos;
+    [SerializeField] private GameObject lerpStartPos;
+
+    public float lerpTime;
+
+    private float lerpTimeMem;
+    private bool isMoving;
+
+    private void Start()
+    {
+        // memory save
+        lerpTimeMem = lerpTime;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            if (!isMoving)
+            {
+                StartCoroutine(LerpToPosition());
+            }
+        }
+    }
+
+    private IEnumerator LerpToPosition()
+    {
+        Debug.Log("Beginning Lerp");
+
+        while (lerpTime > 0)
+        {
+            yield return null;
+            isMoving = true;
+            lerpTime -= Time.deltaTime;
+
+            transform.position = Vector3.Lerp(transform.position, lerpToPos.transform.position, Time.deltaTime * 2);
+            transform.rotation = Quaternion.Lerp(transform.rotation, lerpToPos.transform.rotation, Time.deltaTime * 2);
+
+            if (lerpTime <= 0)
+            {
+                Debug.Log("Lerp Done!");
+                isMoving = false;
+                lerpTime = lerpTimeMem;
+
+                // switch positions!
+                GameObject a = lerpStartPos;
+                GameObject b = lerpToPos;
+
+                lerpToPos = a;
+                lerpStartPos = b;
+
+                break;
+            }
+        }
+    }
+}
